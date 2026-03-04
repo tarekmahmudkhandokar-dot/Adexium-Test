@@ -7,14 +7,14 @@
 
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
 
-<script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
-          <script>
-            window.TelegramAdsController = new TelegramAdsController();
-            window.TelegramAdsController.initialize({
-              pubId: "987925",
-              appId: "5127",
-            });
-          </script>
+    <script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
+    <script>
+      window.TelegramAdsController = new TelegramAdsController();
+      window.TelegramAdsController.initialize({
+        pubId: "987925",
+        appId: "5127",
+      });
+    </script>
     
     <script type="text/javascript" src="https://cdn.tgads.space/assets/js/adexium-widget.min.js"></script>
 
@@ -60,69 +60,62 @@
 
     <div class="btn-container">
         <button id="interstitial-btn">Show Interstitial Ad</button>
-
         <button id="push-btn">Show Push-like Ad</button>
     </div>
 
     <script type="text/javascript">
-        // পেজ লোড হওয়ার পর বাটনগুলোতে ফাংশন সেট করা
         document.addEventListener('DOMContentLoaded', () => {
             
-            // ইন্টারস্টিশিয়াল অ্যাড সেটআপ
+            // Adexium বাটন সেটআপ (আগের মতোই রাখা)
             const interstitialBtn = document.getElementById('interstitial-btn');
             interstitialBtn.addEventListener('click', () => {
                 const interstitialAd = new AdexiumWidget({
                     wid: '994b631c-6659-4975-a09b-9bb3b4eb0290', 
                     adFormat: 'interstitial'
                 });
-                interstitialAd.autoMode(); // ক্লিক করলে অ্যাড দেখাবে
-                console.log("Interstitial Ad triggered");
+                interstitialAd.autoMode();
+                console.log("Interstitial Ad triggered (Adexium)");
             });
 
-            // পুশ-লাইক অ্যাড সেটআপ
             const pushBtn = document.getElementById('push-btn');
             pushBtn.addEventListener('click', () => {
                 const pushAd = new AdexiumWidget({
                     wid: '1b6359f2-c461-498c-915e-3dfbe0eaa3c1', 
                     adFormat: 'push-like'
                 });
-                pushAd.autoMode(); // ক্লিক করলে অ্যাড দেখাবে
-                console.log("Push-like Ad triggered");
+                pushAd.autoMode();
+                console.log("Push-like Ad triggered (Adexium)");
             });
 
+            // RichAds অটো অ্যাডের চেষ্টা (৫ সেকেন্ড পর প্রথম + প্রতি ১ মিনিট পর)
+            setTimeout(() => {
+                console.log("RichAds auto attempt started after 5 seconds");
+
+                // প্রথম re-initialize চেষ্টা
+                if (window.TelegramAdsController) {
+                    window.TelegramAdsController = new TelegramAdsController();
+                    window.TelegramAdsController.initialize({
+                        pubId: "987925",
+                        appId: "5127"
+                    });
+                    console.log("RichAds re-initialized (first attempt)");
+                }
+
+                // প্রতি ৬০ সেকেন্ড পর পর re-init
+                setInterval(() => {
+                    console.log("RichAds auto cycle: re-initializing...");
+                    if (window.TelegramAdsController) {
+                        window.TelegramAdsController = new TelegramAdsController();
+                        window.TelegramAdsController.initialize({
+                            pubId: "987925",
+                            appId: "5127"
+                        });
+                    }
+                }, 60000);
+
+            }, 5000);
         });
-    <!-- এটা <body> এর শেষে যোগ করো (তোমার আগের script-এর পরে বা ভিতরে মার্জ করে) -->
-<script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', () => {
-    // ---------------- RichAds অটো অ্যাড লজিক ----------------
-    setTimeout(() => {
-      console.log("RichAds first auto attempt after 5 seconds");
+    </script>
 
-      // প্রথম চেষ্টা: re-initialize (কখনো trigger হতে পারে)
-      if (window.TelegramAdsController) {
-        window.TelegramAdsController = new TelegramAdsController();
-        window.TelegramAdsController.initialize({
-          pubId: "987925",
-          appId: "5127"
-        });
-      }
-
-      // প্রতি ১ মিনিট পর পর চালু
-      setInterval(() => {
-        console.log("RichAds auto cycle every 60 seconds");
-
-        if (window.TelegramAdsController) {
-          window.TelegramAdsController = new TelegramAdsController();
-          window.TelegramAdsController.initialize({
-            pubId: "987925",
-            appId: "5127"
-          });
-        }
-      }, 60000);  // 60000 ms = 1 minute
-
-    }, 5000);  // 5000 ms = 5 seconds
-  });
-</script>
-</script>
 </body>
 </html>
