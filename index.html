@@ -91,17 +91,14 @@
             });
 
         });
-    </script>
+    <!-- এটা <body> এর শেষে যোগ করো (তোমার আগের script-এর পরে বা ভিতরে মার্জ করে) -->
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', () => {
-    // তোমার আগের বাটন কোডগুলো এখানে থাকবে...
-
-    // ---------------- অটো অ্যাডের জন্য ----------------
+    // ---------------- RichAds অটো অ্যাড লজিক ----------------
     setTimeout(() => {
-      // প্রথম অ্যাড: ৫ সেকেন্ড পর (RichAds auto + Adexium trigger)
-      console.log("First auto ad attempt after 5 seconds");
+      console.log("RichAds first auto attempt after 5 seconds");
 
-      // RichAds: re-initialize attempt (কখনো কখনো trigger করে)
+      // প্রথম চেষ্টা: re-initialize (কখনো trigger হতে পারে)
       if (window.TelegramAdsController) {
         window.TelegramAdsController = new TelegramAdsController();
         window.TelegramAdsController.initialize({
@@ -110,23 +107,10 @@
         });
       }
 
-      // Adexium interstitial অটো ট্রিগার
-      try {
-        const autoInterstitial = new AdexiumWidget({
-          wid: '994b631c-6659-4975-a09b-9bb3b4eb0290',
-          adFormat: 'interstitial'
-        });
-        autoInterstitial.autoMode();
-        console.log("Auto Adexium interstitial triggered");
-      } catch (e) {
-        console.error("Adexium auto error:", e);
-      }
-
-      // প্রতি ১ মিনিট পর পর (60000 ms)
+      // প্রতি ১ মিনিট পর পর চালু
       setInterval(() => {
-        console.log("Auto ad cycle every 60 seconds");
+        console.log("RichAds auto cycle every 60 seconds");
 
-        // RichAds re-init
         if (window.TelegramAdsController) {
           window.TelegramAdsController = new TelegramAdsController();
           window.TelegramAdsController.initialize({
@@ -134,23 +118,11 @@
             appId: "5127"
           });
         }
+      }, 60000);  // 60000 ms = 1 minute
 
-        // Adexium push-like অটো ট্রিগার (অথবা interstitial)
-        try {
-          const autoPush = new AdexiumWidget({
-            wid: '1b6359f2-c461-498c-915e-3dfbe0eaa3c1',
-            adFormat: 'push-like'
-          });
-          autoPush.autoMode();
-          console.log("Auto Adexium push-like triggered");
-        } catch (e) {
-          console.error("Adexium auto push error:", e);
-        }
-
-      }, 60000);
-
-    }, 5000);
+    }, 5000);  // 5000 ms = 5 seconds
   });
+</script>
 </script>
 </body>
 </html>
