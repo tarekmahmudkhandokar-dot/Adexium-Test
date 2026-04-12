@@ -14,7 +14,7 @@
       window.TelegramAdsController = new TelegramAdsController();
       window.TelegramAdsController.initialize({
         pubId: "987925",
-        appId: "5127"   // একটাই ব্যবহার করো
+        appId: "5127"
       });
     </script>
 
@@ -41,6 +41,7 @@
         }
         #interstitial-btn { background: #0088cc; }
         #push-btn { background: #28a745; }
+        #ime-btn { background: #ff9800; }
     </style>
 </head>
 
@@ -50,11 +51,12 @@
 
 <button id="interstitial-btn">Show Interstitial Ad</button>
 <button id="push-btn">Show Push Ad</button>
+<button id="ime-btn">Show IME Ad</button>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 🔥 Auto Ad (IMPORTANT - page load test)
+    // 🔥 Auto Ad (Optional Test)
     const autoAd = new AdexiumWidget({
         wid: '994b631c-6659-4975-a09b-9bb3b4eb0290',
         adFormat: 'interstitial'
@@ -68,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
             adFormat: 'interstitial'
         });
         ad.autoMode();
-        console.log("Interstitial Ad Clicked");
     };
 
     // Push Button
@@ -78,7 +79,15 @@ document.addEventListener('DOMContentLoaded', () => {
             adFormat: 'push-like'
         });
         ad.autoMode();
-        console.log("Push Ad Clicked");
+    };
+
+    // ✅ IME Ad Button (NEW)
+    document.getElementById('ime-btn').onclick = () => {
+        const ad = new AdexiumWidget({
+            wid: '1b6359f2-c461-498c-915e-3dfbe0eaa3c1',
+            adFormat: 'ime ad'
+        });
+        ad.autoMode();
     };
 
 });
